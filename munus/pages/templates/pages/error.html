@@ -1,0 +1,20 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Erro{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Ocorreu um erro!</h4>
+        <p>{{ error }}</p>
+        <hr>
+        <p class="mb-0">Por favor, tente novamente ou entre em contato com o suporte.</p>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{% url 'upload' %}" class="btn btn-primary">
+            <i class="fas fa-upload"></i> Tentar novamente
+        </a>
+    </div>
+</div>
+{% endblock %}

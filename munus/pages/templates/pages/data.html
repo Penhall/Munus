@@ -1,0 +1,140 @@
+{% extends 'pages/base.html' %}
+{% load custom_filters %}
+
+{% block title %}Análise de Dados{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Análise de Dados</h1>
+
+    <!-- Seção de Totalizadores -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Totalizadores</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for col, values in totals.items %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ col }}</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Soma: {{ values.sum|floatformat:2 }}</li>
+                                <li class="list-group-item">Média: {{ values.mean|floatformat:2 }}</li>
+                                <li class="list-group-item">Mínimo: {{ values.min|floatformat:2 }}</li>
+                                <li class="list-group-item">Máximo: {{ values.max|floatformat:2 }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Filtros -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Filtros</h2>
+        </div>
+        <div class="card-body">
+            <form method="get" action="{% url 'data' %}">
+                <!-- Filtros Categóricos -->
+                {% for col, values in filters.items %}
+                <div class="form-group mb-3">
+                    <label for="{{ col }}">{{ col }}</label>
+                    <select class="form-control" id="{{ col }}" name="{{ col }}">
+                        <option value="">Todos</option>
+                        {% for value in values %}
+                        <option value="{{ value }}" {% if request.GET|get:col == value %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endfor %}
+
+                <!-- Filtros de Data -->
+                {% for col, values in date_filters.items %}
+                <div class="form-group mb-3">
+                    <label for="{{ col }}_year">{{ col }} (Ano)</label>
+                    <select class="form-control" id="{{ col }}_year" name="{{ col }}">
+                        <option value="">Todos</option>
+                        {% for year in values.years %}
+                        <option value="year:{{ year }}" {% if request.GET|get:col == "year:"|add:year|stringformat:"s" %}selected{% endif %}>{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="{{ col }}_month">{{ col }} (Mês)</label>
+                    <select class="form-control" id="{{ col }}_month" name="{{ col }}">
+                        <option value="">Todos</option>
+                        {% for month in values.months %}
+                        <option value="month:{{ month }}" {% if request.GET|get:col == "month:"|add:month|stringformat:"s" %}selected{% endif %}>{{ month }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="{{ col }}_range">{{ col }} (Período)</label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" id="{{ col }}_start" placeholder="Data inicial">
+                        <input type="date" class="form-control" id="{{ col }}_end" placeholder="Data final">
+                        <button type="button" class="btn btn-outline-secondary" onclick="setDateRange('{{ col }}')">Aplicar</button>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+                <a href="{% url 'data' %}" class="btn btn-secondary">Limpar Filtros</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resultados Filtrados -->
+    {% if filtered_data %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Resultados Filtrados</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            {% for col in columns %}
+                            <th>{{ col }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in filtered_data %}
+                        <tr>
+                            {% for value in row.values %}
+                            <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script>
+    function setDateRange(col) {
+        const start = document.getElementById(col + '_start').value;
+        const end = document.getElementById(col + '_end').value;
+        if (start && end) {
+            const rangeInput = document.createElement('input');
+            rangeInput.type = 'hidden';
+            rangeInput.name = col;
+            rangeInput.value = 'range:' + start + '|' + end;
+            document.forms[0].appendChild(rangeInput);
+            document.forms[0].submit();
+        }
+    }
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Dashboard de Análise</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>Selecione o tipo de gráfico</h3>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary" onclick="showAllPlots()">Todos</button>
+                <button type="button" class="btn btn-secondary" onclick="filterPlots('bar')">Barras</button>
+                <button type="button" class="btn btn-secondary" onclick="filterPlots('histogram')">Histogramas</button>
+                <button type="button" class="btn btn-secondary" onclick="filterPlots('scatter')">Dispersão</button>
+            </div>
+        </div>
+    </div>
+
+    {% for plot in plots %}
+        <div class="card mb-4 plot-card">
+            <div class="card-body">
+                {{ plot|safe }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <style>
+        .plot-card {
+            transition: transform 0.2s;
+        }
+        .plot-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+
+    <script>
+        function showAllPlots() {
+            document.querySelectorAll('.plot-card').forEach(card => {
+                card.style.display = 'block';
+            });
+        }
+
+        function filterPlots(type) {
+            const plots = document.querySelectorAll('.plot-card');
+            plots.forEach((plot, index) => {
+                if (type === 'bar' && index < {{ categorical_cols|length }}) {
+                    plot.style.display = 'block';
+                } else if (type === 'histogram' && 
+                          index >= {{ categorical_cols|length }} && 
+                          index < {{ categorical_cols|length + numeric_cols|length }}) {
+                    plot.style.display = 'block';
+                } else if (type === 'scatter' && 
+                          index >= {{ categorical_cols|length + numeric_cols|length }}) {
+                    plot.style.display = 'block';
+                } else {
+                    plot.style.display = 'none';
+                }
+            });
+        }
+    </script>
+{% endblock %}

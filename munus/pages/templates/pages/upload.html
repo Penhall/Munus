@@ -1,0 +1,41 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Upload de Arquivos{% endblock %}
+
+{% block content %}
+    <h1>Upload de Arquivos</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        {% if show_data_button %}
+        <a href="{% url 'data' %}" class="btn btn-success ml-2">
+            <i class="fas fa-chart-bar"></i> Ver Análise
+        </a>
+        {% endif %}
+    </form>
+
+    {% if table_html %}
+        <h2>Dados do Arquivo: {{ file_name }}</h2>
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-striped" style="border: 2px solid #dee2e6;">
+                <thead class="thead-dark">
+                    <tr>
+                        {% for column in columns %}
+                            <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in table_html %}
+                        <tr>
+                            {% for value in row.values %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
