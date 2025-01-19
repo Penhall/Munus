@@ -14,28 +14,38 @@ Munus é um sistema web desenvolvido em Django para upload e análise de arquivo
 
 1. Clone o repositório
 2. Crie um ambiente virtual:
+
    ```bash
    python -m venv venv
    ```
+
 3. Ative o ambiente virtual:
    - Windows: `venv\Scripts\activate`
    - Linux/Mac: `source venv/bin/activate`
 4. Instale as dependências:
+
    ```bash
    pip install -r requirements.txt
    ```
+
 5. Execute as migrações:
+
    ```bash
    python manage.py migrate
    ```
+
 6. Crie um superusuário:
+
    ```bash
    python manage.py createsuperuser
    ```
+
 7. Inicie o servidor:
+
    ```bash
    python manage.py runserver
    ```
+
 8. Acesse `http://localhost:8000`
 
 ## Estrutura de Diretórios

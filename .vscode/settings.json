@@ -1,8 +1,29 @@
 {
     "cSpell.words": [
+        "createsuperuser",
         "csrf",
+        "django",
+        "dmypy",
+        "ehthumbs",
         "enctype",
+        "htmlcov",
+        "ipynb",
+        "ipython",
+        "isort",
         "munus",
+        "mypy",
+        "nosetests",
+        "openpyxl",
+        "pipenv",
+        "Pipfile",
+        "pycache",
+        "pyenv",
+        "pytest",
+        "pythonenv",
+        "runserver",
+        "sdist",
+        "sqlite",
+        "venv",
         "wthbaskul"
     ]
 }
