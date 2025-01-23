@@ -1,42 +1,10 @@
-# Django
-*.log
-*.pot
-*.pyc
-__pycache__/
-db.sqlite3
-media/
-
-# Environments
+# Environment variables
 .env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-pythonenv*
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*.sublime-workspace
-*.sublime-project
-
-# Node
-node_modules/
-
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
+.env.local
+.env.dev
 
 # Python
+__pycache__/
 *.py[cod]
 *$py.class
 *.so
@@ -58,48 +26,39 @@ wheels/
 *.egg
 MANIFEST
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# Environments
-.env
-.venv
-env/
+# Virtualenv
 venv/
 ENV/
-env.bak/
-venv.bak/
-pythonenv*
+env/
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# Mídias incluídas
+media/
+media/uploads/
+samples/
 
-# Pyre type checker
-.pyre/
+# Database
+*.sqlite3
+
+# Django
+media/
+staticfiles/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

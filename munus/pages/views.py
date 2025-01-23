@@ -16,7 +16,10 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = form.save()
+            uploaded_file = form.save(commit=False)
+            if request.user.is_authenticated:
+                uploaded_file.uploaded_by = request.user
+            uploaded_file.save()
             file_path = uploaded_file.file.path
             file_ext = os.path.splitext(file_path)[1].lower()
 

@@ -1,0 +1,42 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Meu Perfil</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Informações Pessoais</h5>
+                                {{ form.as_p }}
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Informações da Conta</h5>
+                                <p><strong>Data de Criação:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+                                <p><strong>Último Acesso:</strong> {{ user.last_login|date:"d/m/Y H:i" }}</p>
+                                <p><strong>Status:</strong> 
+                                    {% if user.is_active %}
+                                        <span class="text-success">Ativo</span>
+                                    {% else %}
+                                        <span class="text-danger">Inativo</span>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                            <a href="{% url 'change_password' %}" class="btn btn-secondary">Alterar Senha</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
