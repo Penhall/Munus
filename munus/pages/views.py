@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import UploadedFile
 from .forms import UploadFileForm
+from .decorators import analista_required, gerente_required
 import pandas as pd
 import os
 import plotly.express as px
@@ -12,6 +13,7 @@ def home(request):
 def about(request):
     return render(request, 'pages/about.html')
 
+@analista_required
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -58,6 +60,7 @@ def upload_file(request):
 
     return render(request, 'pages/upload.html', {'form': form})
 
+@analista_required
 def data(request):
     if not request.session.get('current_file'):
         return redirect('upload_file')

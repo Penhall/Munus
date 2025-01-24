@@ -6,15 +6,15 @@ from enum import Enum
 
 
 class UserRole(Enum):
-    MANAGER = "manager"
-    ANALYST = "analyst"
-    FREE_USER = "free_user"
-    PAID_USER = "paid_user"
-    SUPPORT = "support"
+    GERENTE = "gerente"
+    ANALISTA = "analista"
+    SUPORTE = "suporte"
+    CLIENTE = "cliente"
+    USUARIO = "usuario"
 
     @classmethod
     def choices(cls):
-        return [(key.value, key.name) for key in cls]
+        return [(key.value, key.name.capitalize()) for key in cls]
 
 
 from django.contrib.auth.models import BaseUserManager
@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('role', UserRole.MANAGER.value)
+        extra_fields.setdefault('role', UserRole.GERENTE.value)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
@@ -45,7 +45,7 @@ class UserProfile(AbstractUser):
     objects = UserManager()
     
     role = models.CharField(
-        max_length=20, choices=UserRole.choices(), default=UserRole.FREE_USER.value
+        max_length=20, choices=UserRole.choices(), default=UserRole.USUARIO.value
     )
     email = models.EmailField(_("email address"), unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -66,24 +66,24 @@ class UserProfile(AbstractUser):
         return f"{self.email} ({self.get_role_display()})"
 
     @property
-    def is_manager(self):
-        return self.role == UserRole.MANAGER.value
+    def is_gerente(self):
+        return self.role == UserRole.GERENTE.value
 
     @property
-    def is_analyst(self):
-        return self.role == UserRole.ANALYST.value
+    def is_analista(self):
+        return self.role == UserRole.ANALISTA.value
 
     @property
-    def is_free_user(self):
-        return self.role == UserRole.FREE_USER.value
+    def is_suporte(self):
+        return self.role == UserRole.SUPORTE.value
 
     @property
-    def is_paid_user(self):
-        return self.role == UserRole.PAID_USER.value
+    def is_cliente(self):
+        return self.role == UserRole.CLIENTE.value
 
     @property
-    def is_support(self):
-        return self.role == UserRole.SUPPORT.value
+    def is_usuario(self):
+        return self.role == UserRole.USUARIO.value
 
 
 class ManagerProfile(models.Model):

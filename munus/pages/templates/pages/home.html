@@ -1,8 +1,72 @@
 {% extends 'pages/base.html' %}
 
-{% block title %}Início{% endblock %}
+{% block title %}Início - Munus{% endblock %}
 
 {% block content %}
-    <h1>Bem-vindo ao Munus</h1>
-    <p>Este é o painel principal do sistema.</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Bem-vindo ao Munus</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Sistema de gestão e análise de dados</p>
+                    
+                    {% if user.is_authenticated %}
+                        <div class="alert alert-success">
+                            <h4>Olá, {{ user.email }}!</h4>
+                            <p>Seu perfil: <strong>{{ user.get_role_display }}</strong></p>
+                        </div>
+                        
+                        <div class="row">
+                            {% if user.is_gerente %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Gestão de Usuários</h5>
+                                        <p class="card-text">Gerencie perfis e permissões</p>
+                                        <a href="#" class="btn btn-primary">Acessar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if user.is_analista %}
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Análise de Dados</h5>
+                                        <p class="card-text">Visualize e processe dados</p>
+                                        <a href="{% url 'data' %}" class="btn btn-primary">Acessar</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <h4>Faça login para acessar o sistema</h4>
+                            <a href="{% url 'login' %}" class="btn btn-primary">Entrar</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">Atividades Recentes</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Último acesso: {{ user.last_access|date:"d/m/Y H:i" }}</li>
+                        <li class="list-group-item">Conta criada em: {{ user.created_at|date:"d/m/Y" }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

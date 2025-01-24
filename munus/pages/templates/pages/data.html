@@ -99,7 +99,20 @@
         </div>
         <div class="card-body">
             {% load django_tables2 %}
-            {% render_table table %}
+            {% render_table table "django_tables2/bootstrap5.html" %}
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="form-group mb-0">
+                    <select class="form-select" id="perPage" onchange="updatePerPage(this.value)">
+                        <option value="10">10 itens por página</option>
+                        <option value="25">25 itens por página</option>
+                        <option value="50">50 itens por página</option>
+                        <option value="100">100 itens por página</option>
+                    </select>
+                </div>
+                <div class="text-muted">
+                    Mostrando {{ table.page.start_index }} - {{ table.page.end_index }} de {{ table.paginator.count }} itens
+                </div>
+            </div>
         </div>
     </div>
     {% endif %}
@@ -116,6 +129,12 @@
             document.forms[0].appendChild(rangeInput);
             document.forms[0].submit();
         }
+    }
+
+    function updatePerPage(value) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('per_page', value);
+        window.location.href = url.toString();
     }
     </script>
 </div>
