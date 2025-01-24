@@ -137,6 +137,9 @@ def data(request):
                 'months': months
             }
 
+        from .tables import UserTable
+        table = UserTable(df.to_dict('records'))
+        
         return render(request, 'pages/data.html', {
             'totals': totals,
             'filters': filters,
@@ -145,7 +148,7 @@ def data(request):
             'numeric_cols': numeric_cols,
             'categorical_cols': categorical_cols,
             'date_cols': date_cols,
-            'filtered_data': df.to_dict('records')
+            'table': table
         })
 
     except Exception as e:

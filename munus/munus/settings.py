@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
+    'django_tables2',
     
     # Local
     'pages',
@@ -115,6 +116,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Django Tables2
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap5.html"
+DJANGO_TABLES2_PAGE_RANGE = 10
 
 # Custom User Model
 AUTH_USER_MODEL = 'pages.UserProfile'

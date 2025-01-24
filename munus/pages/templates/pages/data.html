@@ -98,26 +98,8 @@
             <h2>Resultados Filtrados</h2>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            {% for col in columns %}
-                            <th>{{ col }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in filtered_data %}
-                        <tr>
-                            {% for value in row.values %}
-                            <td>{{ value }}</td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            {% load django_tables2 %}
+            {% render_table table %}
         </div>
     </div>
     {% endif %}

@@ -24,3 +24,4 @@ factory-boy==3.2.1
 # Frontend
 django-bootstrap5==23.3
 plotly==5.22.0
+django-tables2==2.7.0
