@@ -1,0 +1,112 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Munus - Sistema de Gestão e Análise de Dados{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <!-- Hero Section -->
+    <section class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4 mb-4">Transforme seus dados em insights poderosos</h1>
+                    <p class="lead mb-4">O Munus oferece ferramentas avançadas para análise e gestão de dados</p>
+                    <div class="d-grid gap-2 d-md-block">
+                        <a href="{% url 'signup' %}" class="btn btn-light btn-lg me-2">Comece Grátis</a>
+                        <a href="#planos" class="btn btn-outline-light btn-lg">Conheça os Planos</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://via.placeholder.com/600x400" alt="Dashboard" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-4">
+                <div class="col">
+                    <h2 class="display-5">Por que escolher o Munus?</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5">📊 Análise Completa</h3>
+                            <p>Visualizações e relatórios detalhados</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5">🔒 Segurança</h3>
+                            <p>Proteção de dados e controle de acesso</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="h5">📈 Insights</h3>
+                            <p>Tomada de decisão baseada em dados</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="planos" class="bg-light py-5">
+        <div class="container">
+            <div class="row text-center mb-4">
+                <div class="col">
+                    <h2 class="display-5">Escolha seu Plano</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="h4">Plano Free</h3>
+                            <p class="h5">Para usuários individuais</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">✔️ 5 análises/mês</li>
+                                <li class="mb-2">✔️ Acesso básico aos dados</li>
+                                <li class="mb-2">✔️ Suporte por email</li>
+                                <li class="mb-2">❌ Relatórios avançados</li>
+                                <li class="mb-2">❌ Tema personalizado</li>
+                            </ul>
+                            <a href="{% url 'signup' %}" class="btn btn-success w-100">Comece Grátis</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-warning text-dark">
+                            <h3 class="h4">Plano Pago</h3>
+                            <p class="h5">Para clientes profissionais</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">✔️ Análises ilimitadas</li>
+                                <li class="mb-2">✔️ Acesso completo aos dados</li>
+                                <li class="mb-2">✔️ Suporte prioritário</li>
+                                <li class="mb-2">✔️ Relatórios avançados</li>
+                                <li class="mb-2">✔️ Tema personalizado</li>
+                            </ul>
+                            <a href="{% url 'signup' %}" class="btn btn-warning w-100">Assine Agora</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

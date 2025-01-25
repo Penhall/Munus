@@ -19,10 +19,11 @@ class UserRole(Enum):
 
 from django.contrib.auth.models import BaseUserManager
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError("Users must have an email address")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -30,30 +31,44 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('role', UserRole.GERENTE.value)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("role", UserRole.GERENTE.value)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
 
         return self.create_user(email, password, **extra_fields)
 
+
 class UserProfile(AbstractUser):
     objects = UserManager()
-    
+
     role = models.CharField(
         max_length=20, choices=UserRole.choices(), default=UserRole.USUARIO.value
     )
-    email = models.EmailField(_("email address"), unique=True)
+    email = models.EmailField(_("email address"))
     created_at = models.DateTimeField(auto_now_add=True)
     last_access = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+    approved_by = models.ForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="approved_users",
+    )
+    approval_date = models.DateTimeField(null=True, blank=True)
 
     # Remove username field since we're using email as primary identifier
     username = None
+
+    phone = models.CharField(
+        max_length=15, verbose_name="Telefone", blank=True, null=True
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -117,8 +132,11 @@ class UploadedFile(models.Model):
     file = models.FileField(upload_to="uploads/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(
-        UserProfile, on_delete=models.CASCADE, related_name="uploaded_files",
-        null=True, blank=True
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name="uploaded_files",
+        null=True,
+        blank=True,
     )
 
     def process_file(self):

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
     {% bootstrap_javascript %}
 </head>
-<body>
+<body class="{% if user.is_authenticated %}{% if user.profile.role == 'GERENTE' %}manager-theme{% elif user.profile.role == 'ANALISTA' %}analyst-theme{% elif user.profile.role == 'SUPORTE' %}support-theme{% elif user.profile.role == 'CLIENTE' %}client-theme{% else %}default-theme{% endif %}{% else %}default-theme{% endif %}">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'home' %}">Munus</a>
